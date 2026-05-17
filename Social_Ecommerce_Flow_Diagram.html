@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social E-Commerce Platform — Flow Diagram</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap');
+
+  :root {
+    --navy: #1A3C6E;
+    --teal: #0D7377;
+    --teal-light: #14BDBD;
+    --amber: #F5A623;
+    --red: #E53935;
+    --green: #2E7D32;
+    --purple: #6B21A8;
+    --bg: #F0F4FA;
+    --white: #FFFFFF;
+    --gray-100: #F5F6F8;
+    --gray-200: #E4E7ED;
+    --gray-400: #9AA5B4;
+    --gray-700: #344054;
+    --shadow-sm: 0 2px 8px rgba(26,60,110,0.08);
+    --shadow-md: 0 6px 24px rgba(26,60,110,0.13);
+    --shadow-lg: 0 16px 48px rgba(26,60,110,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--gray-700);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e4d8c 50%, #0D7377 100%);
+    color: white;
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(20,189,189,0.08);
+  }
+  .header-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    color: var(--teal-light); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 38px; font-weight: 800; line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .header p {
+    font-size: 16px; color: rgba(255,255,255,0.65); font-weight: 400;
+  }
+
+  /* ── TABS ── */
+  .tabs-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 60px;
+    display: flex; gap: 0;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .tab-btn {
+    padding: 18px 24px; cursor: pointer; border: none; background: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 600; color: var(--gray-400);
+    border-bottom: 3px solid transparent; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active { color: var(--navy); border-bottom-color: var(--teal); }
+  .tab-btn:hover:not(.active) { color: var(--gray-700); }
+
+  /* ── CONTENT ── */
+  .content { display: none; padding: 48px 60px; max-width: 1200px; margin: 0 auto; }
+  .content.active { display: block; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-section { margin-bottom: 56px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--gray-200);
+  }
+
+  .flow-row {
+    display: flex; align-items: stretch; gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .flow-node {
+    flex: 1; min-width: 160px;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1.5px solid var(--gray-200);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .flow-node:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+  .flow-node .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .flow-node .node-icon { font-size: 22px; margin-bottom: 8px; }
+  .flow-node .node-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.3; }
+  .flow-node .node-desc { font-size: 11px; color: var(--gray-400); line-height: 1.5; }
+
+  .node-user { border-top: 3px solid var(--navy); }
+  .node-user .step-num { background: #EEF3FC; color: var(--navy); }
+  .node-brand { border-top: 3px solid var(--teal); }
+  .node-brand .step-num { background: #E0F5F5; color: var(--teal); }
+  .node-money { border-top: 3px solid var(--amber); }
+  .node-money .step-num { background: #FFF8E1; color: #9A6700; }
+  .node-platform { border-top: 3px solid var(--purple); }
+  .node-platform .step-num { background: #F3E8FF; color: var(--purple); }
+  .node-milestone { border-top: 3px solid var(--green); }
+  .node-milestone .step-num { background: #E6F4EA; color: var(--green); }
+  .node-warning { border-top: 3px solid var(--red); }
+  .node-warning .step-num { background: #FFEBEE; color: var(--red); }
+
+  .flow-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 6px; color: var(--gray-400); font-size: 18px;
+    flex-shrink: 0; align-self: center;
+  }
+  .flow-arrow-down {
+    text-align: center; font-size: 20px; color: var(--gray-400);
+    padding: 8px 0; width: 100%;
+  }
+
+  /* ── THREE COLUMN FLOW (money) ── */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0; align-items: stretch;
+  }
+
+  /* ── MILESTONE TABLE ── */
+  .milestone-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px; margin-top: 16px;
+  }
+  .milestone-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 24px 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1.5px solid var(--gray-200);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .milestone-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .milestone-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  .milestone-followers { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .milestone-title { font-size: 14px; font-weight: 700; color: var(--gray-700); margin-bottom: 14px; }
+  .milestone-unlocks { list-style: none; }
+  .milestone-unlocks li {
+    font-size: 11px; color: var(--gray-400); padding: 4px 0;
+    border-bottom: 1px solid var(--gray-200); line-height: 1.5;
+  }
+  .milestone-unlocks li:last-child { border-bottom: none; }
+  .milestone-unlocks li::before { content: "✓  "; color: var(--green); font-weight: 700; }
+
+  /* ── REVENUE TABLE ── */
+  .revenue-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;
+  }
+  .revenue-card {
+    background: var(--white); border-radius: 14px; padding: 24px;
+    box-shadow: var(--shadow-sm); border: 1.5px solid var(--gray-200);
+  }
+  .revenue-icon { font-size: 28px; margin-bottom: 12px; }
+  .revenue-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .revenue-how { font-size: 12px; color: var(--gray-400); line-height: 1.6; margin-bottom: 10px; }
+  .revenue-amount { font-size: 13px; font-weight: 700; color: var(--teal); }
+
+  /* ── STAKEHOLDER TABS ── */
+  .stakeholder-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .stakeholder-card {
+    background: var(--white); border-radius: 16px;
+    box-shadow: var(--shadow-sm); overflow: hidden;
+  }
+  .stakeholder-header {
+    padding: 20px 22px; font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 700; color: white;
+  }
+  .stakeholder-steps { padding: 16px; }
+  .s-step {
+    display: flex; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100); align-items: flex-start;
+  }
+  .s-step:last-child { border-bottom: none; }
+  .s-step-num {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    font-size: 10px; font-weight: 800; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .s-step-text { font-size: 12px; line-height: 1.5; color: var(--gray-700); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    border-radius: 12px; padding: 20px 24px; margin: 20px 0;
+    border-left: 4px solid; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .info-box-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .info-box-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .info-box-text { font-size: 12px; line-height: 1.7; color: var(--gray-700); }
+  .info-green { background: #E6F4EA; border-color: var(--green); }
+  .info-amber { background: #FFF8E1; border-color: var(--amber); }
+  .info-blue { background: #EEF3FC; border-color: var(--navy); }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    background: var(--white); border-radius: 10px; padding: 14px 20px;
+    box-shadow: var(--shadow-sm); margin-bottom: 28px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray-700); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .header { padding: 32px 24px; }
+    .header h1 { font-size: 26px; }
+    .tabs-bar { padding: 0 24px; overflow-x: auto; }
+    .content { padding: 32px 24px; }
+    .milestone-grid { grid-template-columns: repeat(2, 1fr); }
+    .revenue-grid { grid-template-columns: 1fr; }
+    .stakeholder-row { grid-template-columns: 1fr; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Platform Architecture</div>
+  <h1>Social E-Commerce Platform</h1>
+  <p>Complete flow diagram — User, Creator, Brand & Platform journeys</p>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('main-flow')">🔄 Main Flow</button>
+  <button class="tab-btn" onclick="showTab('stakeholders')">👥 Stakeholder Journeys</button>
+  <button class="tab-btn" onclick="showTab('money-flow')">💰 Money Flow</button>
+  <button class="tab-btn" onclick="showTab('milestones')">🏆 Creator Milestones</button>
+  <button class="tab-btn" onclick="showTab('revenue')">📊 Revenue Model</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 1: MAIN FLOW                                   -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="content active" id="main-flow">
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--navy)"></div>User / Creator Actions</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Brand Actions</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Money / Commission</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Milestone Unlock</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Platform System</div>
+  </div>
+
+  <!-- STEP 1: Entry -->
+  <div class="flow-section">
+    <div class="section-label">Phase 1 — Platform Entry</div>
+    <div class="flow-row">
+      <div class="flow-node node-user">
+        <div class="step-num">1</div>
+        <div class="node-icon">📲</div>
+        <div class="node-title">User Discovers Platform</div>
+        <div class="node-desc">Via social ads, word of mouth, or creator referrals</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">2</div>
+        <div class="node-icon">✍️</div>
+        <div class="node-title">Sign Up</div>
+        <div class="node-desc">Name, email, phone, category interests</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">3</div>
+        <div class="node-icon">🔑</div>
+        <div class="node-title">Login</div>
+        <div class="node-desc">Email/phone OTP or social login</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-platform">
+        <div class="step-num">4</div>
+        <div class="node-icon">🏠</div>
+        <div class="node-title">Homepage Feed</div>
+        <div class="node-desc">Algorithmic feed from followed creators + discovery</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Content -->
+  <div class="flow-section">
+    <div class="section-label">Phase 2 — Content & Posting</div>
+    <div class="flow-row">
+      <div class="flow-node node-user">
+        <div class="step-num">5</div>
+        <div class="node-icon">📸</div>
+        <div class="node-title">Create Post</div>
+        <div class="node-desc">Upload image or video of lifestyle / product</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">6</div>
+        <div class="node-icon">🔗</div>
+        <div class="node-title">Attach Product Link</div>
+        <div class="node-desc">Search product catalog or paste external link in caption / bio</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-platform">
+        <div class="step-num">7</div>
+        <div class="node-icon">🎯</div>
+        <div class="node-title">Platform Generates Affiliate URL</div>
+        <div class="node-desc">Unique tracked link per creator per product</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">8</div>
+        <div class="node-icon">📢</div>
+        <div class="node-title">Post Goes Live</div>
+        <div class="node-desc">Distributed to followers + discovery algorithm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Commerce -->
+  <div class="flow-section">
+    <div class="section-label">Phase 3 — Commerce Loop</div>
+    <div class="flow-row">
+      <div class="flow-node node-user">
+        <div class="step-num">9</div>
+        <div class="node-icon">👀</div>
+        <div class="node-title">Follower Sees Post</div>
+        <div class="node-desc">Organic reach + feed algorithm</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">10</div>
+        <div class="node-icon">🖱️</div>
+        <div class="node-title">Clicks Affiliate Link</div>
+        <div class="node-desc">Cookie-tracked; 30-day attribution window</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-user">
+        <div class="step-num">11</div>
+        <div class="node-icon">🛒</div>
+        <div class="node-title">Purchases Product</div>
+        <div class="node-desc">On brand's site or in-app checkout</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-money">
+        <div class="step-num">12</div>
+        <div class="node-icon">💸</div>
+        <div class="node-title">Commission Triggered</div>
+        <div class="node-desc">Brand pays % of sale → Platform splits with Creator</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Growth -->
+  <div class="flow-section">
+    <div class="section-label">Phase 4 — Creator Growth & Brand Collabs</div>
+    <div class="flow-row">
+      <div class="flow-node node-milestone">
+        <div class="step-num">13</div>
+        <div class="node-icon">🏆</div>
+        <div class="node-title">Hit 100 Followers</div>
+        <div class="node-desc">Creator status unlocked; Brand Marketplace access</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-brand">
+        <div class="step-num">14</div>
+        <div class="node-icon">🤝</div>
+        <div class="node-title">Brand Match</div>
+        <div class="node-desc">Platform AI matches creator with relevant brands</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-brand">
+        <div class="step-num">15</div>
+        <div class="node-icon">📋</div>
+        <div class="node-title">Collab Deal</div>
+        <div class="node-desc">Creator posts sponsored content; brand pays flat fee + commission</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-money">
+        <div class="step-num">16</div>
+        <div class="node-icon">🎉</div>
+        <div class="node-title">Everyone Earns</div>
+        <div class="node-desc">Creator gets paid. Brand gets sales. Platform takes cut.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box info-green">
+    <div class="info-box-icon">✅</div>
+    <div>
+      <div class="info-box-title">The Flywheel</div>
+      <div class="info-box-text">More creators → more content → more followers → more sales → more brand interest → more creator deals → more creators join. Once this loop starts spinning, it's self-reinforcing. Your job in Year 1 is to manually spark it.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 2: STAKEHOLDER JOURNEYS                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="content" id="stakeholders">
+
+  <div class="stakeholder-row">
+
+    <!-- USER / CREATOR -->
+    <div class="stakeholder-card">
+      <div class="stakeholder-header" style="background: linear-gradient(135deg, var(--navy), #2a5298);">
+        👤 User / Creator Journey
+      </div>
+      <div class="stakeholder-steps">
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">1</div>
+          <div class="s-step-text"><strong>Sign Up & Login</strong> — Create profile, set interests and niche</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">2</div>
+          <div class="s-step-text"><strong>Explore Homepage Feed</strong> — Browse content, follow creators</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">3</div>
+          <div class="s-step-text"><strong>Post Content</strong> — Photos, videos, social life, products</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">4</div>
+          <div class="s-step-text"><strong>Attach Product Links</strong> — From platform catalog or external URL</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">5</div>
+          <div class="s-step-text"><strong>Grow Following</strong> — Build audience organically</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E6F4EA;color:var(--green)">6</div>
+          <div class="s-step-text"><strong>Hit Milestones</strong> — 100 → 1K → 10K followers unlock new features</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#EEF3FC;color:var(--navy)">7</div>
+          <div class="s-step-text"><strong>Apply for Brand Deals</strong> — Browse Brand Marketplace, submit proposals</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#FFF8E1;color:#9A6700)">8</div>
+          <div class="s-step-text"><strong>Earn Commission</strong> — On every sale via affiliate link</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#FFF8E1;color:#9A6700">9</div>
+          <div class="s-step-text"><strong>Get Paid</strong> — Monthly payout via platform wallet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRAND -->
+    <div class="stakeholder-card">
+      <div class="stakeholder-header" style="background: linear-gradient(135deg, var(--teal), #0a9a9e);">
+        🏢 Brand Journey
+      </div>
+      <div class="stakeholder-steps">
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">1</div>
+          <div class="s-step-text"><strong>Onboarding</strong> — Platform team assists (manual/sales-led at first)</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">2</div>
+          <div class="s-step-text"><strong>Upload Product Catalog</strong> — Set commission rates per product</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">3</div>
+          <div class="s-step-text"><strong>Products Go Live</strong> — Creators can search and link your products</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">4</div>
+          <div class="s-step-text"><strong>Post Collab Brief</strong> — Describe campaign, budget, content requirements</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">5</div>
+          <div class="s-step-text"><strong>Review Creator Applications</strong> — Or get AI-matched suggestions</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">6</div>
+          <div class="s-step-text"><strong>Approve Collaboration</strong> — Set terms, deliverables, payment</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#E0F5F5;color:var(--teal)">7</div>
+          <div class="s-step-text"><strong>Track Sales & ROI</strong> — Real-time dashboard: clicks, conversions, revenue</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#FFF8E1;color:#9A6700">8</div>
+          <div class="s-step-text"><strong>Pay Commission</strong> — Automated on each verified sale</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATFORM -->
+    <div class="stakeholder-card">
+      <div class="stakeholder-header" style="background: linear-gradient(135deg, var(--purple), #7c3aed);">
+        ⚙️ Platform Role
+      </div>
+      <div class="stakeholder-steps">
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">1</div>
+          <div class="s-step-text"><strong>Authenticate Users & Brands</strong> — Secure sign-up/login flow</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">2</div>
+          <div class="s-step-text"><strong>Serve Algorithmic Feed</strong> — Content distribution and discovery</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">3</div>
+          <div class="s-step-text"><strong>Generate Tracked Affiliate Links</strong> — Unique per creator per product</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">4</div>
+          <div class="s-step-text"><strong>Track All Clicks & Sales</strong> — 30-day cookie attribution window</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">5</div>
+          <div class="s-step-text"><strong>Calculate Commissions</strong> — Auto-split between creator and platform</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">6</div>
+          <div class="s-step-text"><strong>Milestone Detection</strong> — Auto-unlock features at follower thresholds</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">7</div>
+          <div class="s-step-text"><strong>Brand-Creator Matching</strong> — AI matching on niche + audience fit</div>
+        </div>
+        <div class="s-step">
+          <div class="s-step-num" style="background:#F3E8FF;color:var(--purple)">8</div>
+          <div class="s-step-text"><strong>Process Payouts</strong> — Verified monthly payments to creators</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 3: MONEY FLOW                                  -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="content" id="money-flow">
+
+  <div class="info-box info-blue" style="margin-bottom:32px">
+    <div class="info-box-icon">💡</div>
+    <div>
+      <div class="info-box-title">How Commission Works — Example</div>
+      <div class="info-box-text">A follower buys a ₹2,000 jacket through a creator's affiliate link. The brand has set a 15% commission rate (₹300). The platform keeps 20% of the commission (₹60). The creator receives 80% (₹240). The brand acquired a customer for ₹300 — far cheaper than a Facebook ad.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Commission Split Flow</div>
+  <div class="three-col" style="gap:0; align-items:stretch; margin-bottom:40px">
+
+    <div class="flow-node node-user" style="border-top-color:var(--navy)">
+      <div class="node-icon">🛒</div>
+      <div class="node-title">Follower Buys ₹2,000 Product</div>
+      <div class="node-desc">Via creator's tracked affiliate link</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node node-brand">
+      <div class="node-icon">🏢</div>
+      <div class="node-title">Brand Pays 15% Commission</div>
+      <div class="node-desc">₹300 triggered automatically on confirmed sale</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node node-platform" style="border-top-color:var(--purple)">
+      <div class="node-icon">⚙️</div>
+      <div class="node-title">Platform Splits Commission</div>
+      <div class="node-desc">Creator gets ₹240 (80%) · Platform keeps ₹60 (20%)</div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Who Gets What</div>
+  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:40px">
+
+    <div style="background:var(--white);border-radius:16px;padding:28px;box-shadow:var(--shadow-md);border-top:4px solid var(--teal);text-align:center">
+      <div style="font-size:36px;margin-bottom:10px">👤</div>
+      <div style="font-size:13px;font-weight:700;color:var(--gray-400);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Creator Earns</div>
+      <div style="font-size:42px;font-weight:800;color:var(--teal);margin-bottom:4px">₹240</div>
+      <div style="font-size:12px;color:var(--gray-400)">80% of ₹300 commission</div>
+      <div style="margin-top:16px;font-size:11px;color:var(--gray-400);line-height:1.7">Paid monthly via platform wallet. Scales directly with sales volume.</div>
+    </div>
+
+    <div style="background:var(--white);border-radius:16px;padding:28px;box-shadow:var(--shadow-md);border-top:4px solid var(--purple);text-align:center">
+      <div style="font-size:36px;margin-bottom:10px">⚙️</div>
+      <div style="font-size:13px;font-weight:700;color:var(--gray-400);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Platform Earns</div>
+      <div style="font-size:42px;font-weight:800;color:var(--purple);margin-bottom:4px">₹60</div>
+      <div style="font-size:12px;color:var(--gray-400)">20% of ₹300 commission</div>
+      <div style="margin-top:16px;font-size:11px;color:var(--gray-400);line-height:1.7">Plus brand subscription fees and featured placement revenue.</div>
+    </div>
+
+    <div style="background:var(--white);border-radius:16px;padding:28px;box-shadow:var(--shadow-md);border-top:4px solid var(--navy);text-align:center">
+      <div style="font-size:36px;margin-bottom:10px">🏢</div>
+      <div style="font-size:13px;font-weight:700;color:var(--gray-400);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Brand's CAC</div>
+      <div style="font-size:42px;font-weight:800;color:var(--navy);margin-bottom:4px">₹300</div>
+      <div style="font-size:12px;color:var(--gray-400)">Customer acquisition cost</div>
+      <div style="margin-top:16px;font-size:11px;color:var(--gray-400);line-height:1.7">Only pays on actual sales. No wasted ad spend on impressions.</div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Brand Deal Money Flow (Paid Collab)</div>
+  <div style="display:grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap:0; align-items:center; margin-bottom:32px">
+    <div class="flow-node node-brand">
+      <div class="node-icon">📋</div>
+      <div class="node-title">Brand Posts Collab Brief</div>
+      <div class="node-desc">Budget: ₹5,000 flat fee + 10% commission</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node node-platform">
+      <div class="node-icon">🔍</div>
+      <div class="node-title">Platform Matches & Facilitates</div>
+      <div class="node-desc">Takes listing fee + 20% of commission earned</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node node-user">
+      <div class="node-icon">📸</div>
+      <div class="node-title">Creator Posts Content</div>
+      <div class="node-desc">Gets ₹5,000 flat + commission on all sales generated</div>
+    </div>
+  </div>
+
+  <div class="info-box info-amber">
+    <div class="info-box-icon">⚠️</div>
+    <div>
+      <div class="info-box-title">Critical: Tracking Must Be Bulletproof</div>
+      <div class="info-box-text">If a creator's sale doesn't get tracked and attributed correctly, they lose income and trust in your platform immediately. Invest in robust affiliate tracking infrastructure from Day 1 — this is non-negotiable.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 4: MILESTONES                                  -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="content" id="milestones">
+
+  <div class="info-box info-blue" style="margin-bottom:32px">
+    <div class="info-box-icon">🎯</div>
+    <div>
+      <div class="info-box-title">Why a Tiered System Instead of One Threshold</div>
+      <div class="info-box-text">A single "100 followers = eligible" rule is too blunt. Creators need progressive incentives to stay engaged. Brands need confidence in who they're working with. A tiered system solves both problems and creates a natural growth path on your platform.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Creator Milestone Tiers</div>
+  <div class="milestone-grid">
+
+    <div class="milestone-card">
+      <div class="milestone-badge" style="background:#EEF3FC;color:var(--navy)">Tier 1</div>
+      <div class="milestone-followers">0 – 99</div>
+      <div class="milestone-title">Starter Creator</div>
+      <ul class="milestone-unlocks">
+        <li>Post images and videos</li>
+        <li>Follow other creators</li>
+        <li>Basic affiliate link (untracked)</li>
+        <li>Standard profile</li>
+        <li>Commission: Not yet active</li>
+      </ul>
+    </div>
+
+    <div class="milestone-card" style="border-color:#34A853">
+      <div class="milestone-badge" style="background:#E6F4EA;color:var(--green)">Tier 2 ✓ Unlocked</div>
+      <div class="milestone-followers" style="color:var(--green)">100 – 999</div>
+      <div class="milestone-title">Creator</div>
+      <ul class="milestone-unlocks">
+        <li>Everything in Tier 1</li>
+        <li>Tracked affiliate links (unique per creator)</li>
+        <li>Basic analytics dashboard</li>
+        <li>Creator badge on profile</li>
+        <li>Brand Marketplace view access</li>
+        <li>Product gifting eligibility</li>
+        <li>Commission: Affiliate only (80% split)</li>
+      </ul>
+    </div>
+
+    <div class="milestone-card" style="border-color:var(--teal)">
+      <div class="milestone-badge" style="background:#E0F5F5;color:var(--teal)">Tier 3</div>
+      <div class="milestone-followers" style="color:var(--teal)">1,000 – 9,999</div>
+      <div class="milestone-title">Rising Creator</div>
+      <ul class="milestone-unlocks">
+        <li>Everything in Tier 2</li>
+        <li>Apply for paid brand deals</li>
+        <li>Priority brand matching</li>
+        <li>Full analytics + audience insights</li>
+        <li>Collab campaign eligibility</li>
+        <li>Higher commission tier (82% split)</li>
+        <li>Payout wallet + bank link</li>
+      </ul>
+    </div>
+
+    <div class="milestone-card" style="border-color:var(--amber)">
+      <div class="milestone-badge" style="background:#FFF8E1;color:#9A6700">Tier 4 ⭐ Elite</div>
+      <div class="milestone-followers" style="color:#9A6700">10,000+</div>
+      <div class="milestone-title">Pro Creator</div>
+      <ul class="milestone-unlocks">
+        <li>Everything in Tier 3</li>
+        <li>Featured on discovery page</li>
+        <li>Dedicated brand partnership deals</li>
+        <li>Premium commission rate (85% split)</li>
+        <li>Early access to new brand campaigns</li>
+        <li>Creator Pro analytics suite</li>
+        <li>Dedicated platform support</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="info-box info-amber" style="margin-top:28px">
+    <div class="info-box-icon">⚠️</div>
+    <div>
+      <div class="info-box-title">Honest Note on Brand Deals at 100 Followers</div>
+      <div class="info-box-text">Research shows only 9% of creators are willing to work on commission-only campaigns. At 100 followers, set expectations clearly: creators unlock the affiliate system and product gifting — not paid sponsorships. Paid brand deals realistically start at 1,000–10,000 followers depending on niche. Consider a small "new creator bonus" (₹100–500/month) to reduce early churn.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TAB 5: REVENUE MODEL                               -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="content" id="revenue">
+
+  <div class="section-label">Platform Revenue Streams</div>
+  <div class="revenue-grid">
+
+    <div class="revenue-card" style="border-top:3px solid var(--navy)">
+      <div class="revenue-icon">💰</div>
+      <div class="revenue-title">Commission Cut</div>
+      <div class="revenue-how">20% of every affiliate commission paid through the platform. Scales automatically with Gross Merchandise Value (GMV). No cap — the more creators sell, the more you earn.</div>
+      <div class="revenue-amount">Core Revenue Stream · Scales with GMV</div>
+    </div>
+
+    <div class="revenue-card" style="border-top:3px solid var(--teal)">
+      <div class="revenue-icon">🏢</div>
+      <div class="revenue-title">Brand Subscription Fee</div>
+      <div class="revenue-how">Monthly SaaS fee for brands to access the Creator Marketplace, post collab briefs, and view creator analytics. Tiered by number of active campaigns and brand size.</div>
+      <div class="revenue-amount">₹5,000 – ₹50,000 / month per brand</div>
+    </div>
+
+    <div class="revenue-card" style="border-top:3px solid var(--amber)">
+      <div class="revenue-icon">🔝</div>
+      <div class="revenue-title">Featured Placement</div>
+      <div class="revenue-how">Brands pay to boost their collab brief or product listing to the top of the creator discovery feed. Pay-per-boost or monthly featured slot.</div>
+      <div class="revenue-amount">₹2,000 – ₹20,000 per campaign</div>
+    </div>
+
+    <div class="revenue-card" style="border-top:3px solid var(--purple)">
+      <div class="revenue-icon">⭐</div>
+      <div class="revenue-title">Creator Pro Tier (V2)</div>
+      <div class="revenue-how">Premium subscription for creators: advanced analytics, benchmark comparisons, early access to brand campaigns, priority brand matching, and dedicated support.</div>
+      <div class="revenue-amount">₹299 – ₹999 / month per creator</div>
+    </div>
+
+    <div class="revenue-card" style="border-top:3px solid var(--green)">
+      <div class="revenue-icon">💳</div>
+      <div class="revenue-title">Payout Processing Fee (V2)</div>
+      <div class="revenue-how">Small fee charged when creators withdraw earnings through the platform wallet. Applied only on successful payouts, making it low-friction for creators.</div>
+      <div class="revenue-amount">1 – 2% of payout value</div>
+    </div>
+
+    <div class="revenue-card" style="border-top:3px solid var(--red); background: #fff8f8">
+      <div class="revenue-icon">⚠️</div>
+      <div class="revenue-title">What NOT to Monetize Early</div>
+      <div class="revenue-how">Don't charge creators to join. Don't take too large a commission cut (above 25% will cause creator churn). Don't paywall basic analytics — creators need to see their earnings to trust you.</div>
+      <div class="revenue-amount" style="color:var(--red)">Avoid these in V1</div>
+    </div>
+
+  </div>
+
+  <div class="section-label" style="margin-top:40px">Go-To-Market — V1 Focus</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+    <div class="info-box info-green" style="margin:0">
+      <div class="info-box-icon">🎯</div>
+      <div>
+        <div class="info-box-title">V1 Targets (First 6 Months)</div>
+        <div class="info-box-text">
+          <strong>Niche:</strong> Fashion/Lifestyle OR Beauty<br>
+          <strong>Geography:</strong> Delhi, Mumbai, Bangalore<br>
+          <strong>Creators:</strong> 100–200 manually onboarded<br>
+          <strong>Brands:</strong> 20–30 Indian D2C brands<br>
+          <strong>Win condition:</strong> First creator earns ₹10,000/month
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box info-amber" style="margin:0">
+      <div class="info-box-icon">🚧</div>
+      <div>
+        <div class="info-box-title">Biggest Risk to Solve First</div>
+        <div class="info-box-text">
+          <strong>Cold Start Problem:</strong> You need brands AND creators AND buyers from Day 1. Solve this by manually onboarding before launch. Do NOT rely on self-serve onboarding in V1.<br><br>
+          <strong>Brand outreach:</strong> Target Boat, Mamaearth, Sugar Cosmetics, Plum, Wakefit.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showTab(tabId) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
